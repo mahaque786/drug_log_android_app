@@ -78,8 +78,7 @@ public class WarningChecker {
         String medName = medication.getGenericName().toLowerCase();
 
         for (RecentLog log : recentLogs) {
-            if (log.medicationName.toLowerCase().contains(medName)
-                    || medName.contains(log.medicationName.toLowerCase())) {
+            if (namesMatch(log.medicationName.toLowerCase(), medName)) {
                 long elapsed = now - log.timestampMillis;
                 if (elapsed < requiredMillis && elapsed >= 0) {
                     double hoursAgo = elapsed / 3600_000.0;
@@ -111,8 +110,7 @@ public class WarningChecker {
 
         for (RecentLog log : recentLogs) {
             if (log.timestampMillis >= oneDayAgo) {
-                if (log.medicationName.toLowerCase().contains(medName)
-                        || medName.contains(log.medicationName.toLowerCase())) {
+                if (namesMatch(log.medicationName.toLowerCase(), medName)) {
                     totalToday += log.dose;
                 }
             }
@@ -213,15 +211,25 @@ public class WarningChecker {
 
     /** Check if two medication names refer to the same drug (fuzzy matching). */
     private static boolean namesMatch(String a, String b) {
-        if (a.contains(b) || b.contains(a)) return true;
+        if (a.equals(b)) return true;
 
-        // Extract first word (generic name root) for comparison
-        String aRoot = a.split("\\s+")[0];
-        String bRoot = b.split("\\s+")[0];
+        // Extract first significant word (generic name root) for comparison
+        String aRoot = extractFirstWord(a);
+        String bRoot = extractFirstWord(b);
+
+        // Require substantial match: roots must be >= 4 chars and equal
         if (aRoot.length() >= 4 && bRoot.length() >= 4) {
-            if (aRoot.contains(bRoot) || bRoot.contains(aRoot)) return true;
+            if (aRoot.equals(bRoot)) return true;
         }
 
+        // Check if one fully contains the other (for names like "Colestipol HCl" vs "colestipol")
+        if (a.equals(b) || a.startsWith(b + " ") || b.startsWith(a + " ")) return true;
+
         return false;
+    }
+
+    private static String extractFirstWord(String name) {
+        if (name == null || name.trim().isEmpty()) return "";
+        return name.trim().split("\\s+")[0];
     }
 }

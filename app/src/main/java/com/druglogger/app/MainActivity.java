@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 doseOptions.add("-- Select Dose --");
                 for (Double d : med.getDoses()) {
                     String formatted = (d == Math.floor(d)) ?
-                            String.valueOf((int) d.doubleValue()) : String.valueOf(d);
+                            String.valueOf(d.intValue()) : String.valueOf(d);
                     doseOptions.add(formatted + " " + med.getDoseUnit());
                 }
                 ArrayAdapter<String> doseAdapter = new ArrayAdapter<>(
@@ -230,8 +230,12 @@ public class MainActivity extends AppCompatActivity {
     private double parseDoseFromString(String doseStr) {
         if (doseStr == null || doseStr.isEmpty()) return 0;
         try {
-            String numPart = doseStr.replaceAll("[^\\d.]", "");
-            return numPart.isEmpty() ? 0 : Double.parseDouble(numPart);
+            java.util.regex.Matcher m = java.util.regex.Pattern.compile("(\\d+(?:\\.\\d+)?)")
+                    .matcher(doseStr);
+            if (m.find()) {
+                return Double.parseDouble(m.group(1));
+            }
+            return 0;
         } catch (NumberFormatException e) {
             return 0;
         }

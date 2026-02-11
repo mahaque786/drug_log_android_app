@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javax.net.ssl.HttpsURLConnection;
-
 /**
  * Sends medication log entries to the Google Apps Script web app
  * and retrieves existing logs.
@@ -139,7 +137,8 @@ public class GoogleSheetsLogger {
     }
 
     private String readResponse(HttpURLConnection conn) throws Exception {
-        // Follow redirects for Google Apps Script (HTTP -> HTTPS redirect)
+        // Google Apps Script responds with a 302 redirect after POST.
+        // The redirect should be followed with GET (standard behavior for 302/303).
         int status = conn.getResponseCode();
         if (status == HttpURLConnection.HTTP_MOVED_TEMP
                 || status == HttpURLConnection.HTTP_MOVED_PERM
@@ -147,7 +146,7 @@ public class GoogleSheetsLogger {
             String newUrl = conn.getHeaderField("Location");
             conn.disconnect();
             URL redirectUrl = new URL(newUrl);
-            HttpsURLConnection redirectConn = (HttpsURLConnection) redirectUrl.openConnection();
+            HttpURLConnection redirectConn = (HttpURLConnection) redirectUrl.openConnection();
             redirectConn.setRequestMethod("GET");
             conn = redirectConn;
         }
