@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Drug Logger</string>
+    <string name="add_entry">Add Entry</string>
+    <string name="delete_entry">Delete Entry</string>
+    <string name="drug_name">Drug Name</string>
+    <string name="dosage">Dosage</string>
+    <string name="notes">Notes</string>
+</resources>
