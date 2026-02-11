@@ -4,45 +4,57 @@ A simple Android application for logging medications/drugs with dosage and notes
 
 ## Features
 
-- Add drug entries with name, dosage, and notes
-- View all logged entries with timestamps
-- Delete individual entries
-- Persistent storage using SQLite database
-- Material Design UI
+- ✅ Add drug entries with name, dosage, and notes
+- ✅ View all logged entries with timestamps
+- ✅ Delete individual entries with confirmation
+- ✅ Persistent storage using SQLite database
+- ✅ Material Design UI with modern look
+- ✅ Supports Android 5.0 (API 21) and higher
+- ✅ No internet connection required
+- ✅ All data stored locally for privacy
+
+## Quick Start
+
+### For Users
+
+1. Download the APK from releases
+2. Install on your Android device
+3. Open the app and start logging!
+
+### For Developers
+
+See [BUILDING.md](BUILDING.md) for detailed build instructions.
+
+**Quick build**:
+```bash
+# Clone the repository
+git clone https://github.com/mahaque786/drug_log_android_app.git
+cd drug_log_android_app
+
+# Build with Gradle
+./gradlew assembleDebug
+
+# Or open in Android Studio and click Run
+```
+
+## Documentation
+
+- 📖 [Building Guide](BUILDING.md) - How to build and run the app
+- 🔧 [Technical Documentation](TECHNICAL.md) - Architecture and implementation details
+- 🎨 [UI Guide](UI_GUIDE.md) - Screenshots and user interface documentation
 
 ## Requirements
 
-- Android SDK 21 or higher
-- Android Studio (recommended) or Gradle
-
-## Building the App
-
-### Using Android Studio
-1. Open Android Studio
-2. Select "Open an existing project"
-3. Navigate to this directory
-4. Wait for Gradle sync to complete
-5. Click Run (or press Shift+F10)
-
-### Using Gradle Command Line
-```bash
-# Build APK
-./gradlew assembleDebug
-
-# Install on connected device
-./gradlew installDebug
-```
-
-The APK will be generated at `app/build/outputs/apk/debug/app-debug.apk`
+- **Minimum Android Version**: Android 5.0 (API 21)
+- **Target Android Version**: Android 13 (API 33)
+- **Permissions**: None required
 
 ## Usage
 
-1. Launch the app
-2. Click the floating action button (+) to add a new entry
-3. Fill in the drug name (required), dosage, and notes
-4. Click "Add" to save the entry
-5. View all entries in the main list
-6. Click the delete button on any entry to remove it
+1. **Add Entry**: Tap the floating action button (+) to add a new drug log
+2. **Fill Details**: Enter drug name (required), dosage, and any notes
+3. **View History**: All entries are displayed in chronological order (newest first)
+4. **Delete Entry**: Tap the delete button on any entry to remove it
 
 ## Project Structure
 
@@ -61,6 +73,26 @@ app/
 │   └── AndroidManifest.xml
 └── build.gradle
 ```
+
+## Technology Stack
+
+- **Language**: Java
+- **UI Framework**: Android SDK with Material Design Components
+- **Database**: SQLite
+- **Architecture**: MVC (Model-View-Controller)
+- **Minimum SDK**: API 21 (Android 5.0)
+- **Target SDK**: API 33 (Android 13)
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit issues or pull requests.
+
+## Privacy
+
+- All data is stored locally on your device
+- No internet connection required
+- No data collection or sharing
+- No advertisements
 
 ## License
 
